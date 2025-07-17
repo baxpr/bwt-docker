@@ -1,0 +1,2 @@
+Path	Symbol	Reason
+matlab_entry/BrainWavelet/setup.m	mex	undeployable
