@@ -3,6 +3,6 @@ export PATH=$(pwd)/bin:$PATH
 run_matlab_entrypoint.sh \
     /home/rogersbp/MATLAB/R2023a \
     WaveletDespike \
-    'INPUTS/fmri.nii.gz' \
-    'OUTPUTS/ctest'
+    $(pwd)/INPUTS/fmri.nii.gz \
+    $(pwd)/OUTPUTS/ctest
 
