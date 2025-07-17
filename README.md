@@ -10,3 +10,8 @@ https://github.com/weikanggong/Resting-state-fMRI-preprocessing/tree/master/Brai
 
 Warning: The included third_party/NIfTI library is known to be buggy, and this may affect
 the correctness of some NIfTI output files, particularly the geometry meta-data.
+
+
+Usage:
+
+    docker run <binds etc> bwt-docker:<version> <matlabfunction> <function args...>
