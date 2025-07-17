@@ -2,5 +2,7 @@ export PATH=$(pwd)/bin:$PATH
 
 run_matlab_entrypoint.sh \
     /home/rogersbp/MATLAB/R2023a \
-    date
+    WaveletDespike \
+    'INPUTS/fmri.nii.gz' \
+    'OUTPUTS/ctest'
 
