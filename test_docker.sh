@@ -5,5 +5,5 @@ docker run \
     --mount type=bind,src=$(pwd -P)/OUTPUTS,dst=/OUTPUTS \
     bwt-docker:test \
     WaveletDespike \
-    /INPUTS/fmri.nii \
+    /INPUTS/fmri.nii.gz \
     /OUTPUTS/ctest
