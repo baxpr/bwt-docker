@@ -20,8 +20,6 @@ inputs:
     filters:
       - type: match
         inputs: scan_fmri,assr_fmriprep/scan_fmri
-      - type: match
-        inputs: scan_fmri,assr_xcpd/scan_fmri
 
     scans:
 
