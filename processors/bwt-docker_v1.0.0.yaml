@@ -49,6 +49,7 @@ command:
       cp /INPUTS/fmriprepBIDS/fmriprepBIDS/sub-*/ses-*/func/*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz /INPUTS/fmri.nii.gz &&
       run_matlab_entrypoint.sh 
       /opt/matlabruntime/R2023a
+      WaveletDespike
       /INPUTS/fmri.nii.gz
       /OUTPUTS/fmri
     '
