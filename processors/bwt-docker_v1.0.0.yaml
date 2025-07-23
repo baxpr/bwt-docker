@@ -12,7 +12,7 @@ containers:
 
 requirements:
   walltime: 0-12
-  memory: 8000
+  memory: 16000
 
 inputs:
   xnat:
@@ -52,4 +52,5 @@ command:
       WaveletDespike
       /INPUTS/fmri.nii.gz
       /OUTPUTS/fmri
+      LimitRAM 12
     '
