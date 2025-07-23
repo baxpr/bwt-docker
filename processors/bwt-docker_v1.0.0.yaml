@@ -3,7 +3,7 @@ procyamlversion: 3.0.0-dev.0
 
 description: https://github.com/baxpr/bwt-docker/
 
-jobtemplate: job_template_v3.txt
+jobtemplate: job_template_container_v3.txt
 
 containers:
   - name: bwt
