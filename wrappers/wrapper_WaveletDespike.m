@@ -19,7 +19,7 @@ Opts = parseInOpts(DefaultOpts,varargin);
 
 % Convert numeric opts from string so they are acceptable to WaveletDespike
 for opt = {'threshold','compress','SP','LimitRAM','verbose'}
-    Opts.(opt) = str2double(Opts.(opt));
+    Opts.(opt{1}) = str2double(Opts.(opt{1}));
 end
 
 % Finally, run WaveletDespike with converted options
