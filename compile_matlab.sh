@@ -10,6 +10,7 @@ export PATH=${MATLABROOT}/bin:${PATH}
 # Compile in matlab
 mcc -m -C -v matlab_entrypoint.m \
     -N \
+    -a wrappers \
     -a BrainWavelet \
     -d bin
 
