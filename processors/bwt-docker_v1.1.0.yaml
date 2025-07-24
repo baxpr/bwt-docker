@@ -7,8 +7,8 @@ jobtemplate: job_template_container_v3.txt
 
 containers:
   - name: bwt
-    path: bwt-docker_v1.0.0.sif
-    source: docker://baxterprogers/bwt-docker:v1.0.0
+    path: bwt-docker_v1.1.0.sif
+    source: docker://baxterprogers/bwt-docker:v1.1.0
 
 requirements:
   walltime: 0-12
@@ -49,7 +49,7 @@ command:
       cp /INPUTS/fmriprepBIDS/fmriprepBIDS/sub-*/ses-*/func/*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz /INPUTS/fmri.nii.gz &&
       run_matlab_entrypoint.sh 
       /opt/matlabruntime/R2023a
-      WaveletDespike
+      wrapper_WaveletDespike
       /INPUTS/fmri.nii.gz
       /OUTPUTS/fmri
       LimitRAM 12
