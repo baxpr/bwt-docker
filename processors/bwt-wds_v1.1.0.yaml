@@ -37,7 +37,7 @@ inputs:
 
 outputs:
   - {path: DESPIKED, type: DIR, resource: DESPIKED}
-  - {path: fmri_noise.nii.gz, type: FILE, resource: NOISE}
+  - {path: NOISE, type: DIR, resource: NOISE}
   - {path: fmri_SP.txt, type: FILE, resource: SP}
 
 
@@ -46,20 +46,26 @@ command:
   container: bwt
   args: >-
     bash -c \"
+
       preproc_niigz=\\\$(ls /INPUTS/fmriprepBIDS/fmriprepBIDS/sub-*/ses-*/func/*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz) &&
       fbase=\\\$(basename \\\$preproc_niigz) &&
       wds_niigz=\\\$(echo \\\$fbase | sed 's/desc-preproc_bold/desc-wds_bold/') &&
-      cp \\\$preproc_niigz /INPUTS &&
+      noise_niigz=\\\$(echo \\\$fbase | sed 's/desc-preproc_bold/desc-noise_bold/') &&
+
       echo preproc_niigz \\\$preproc_niigz &&
       echo fbase \\\$fbase &&
       echo wds_niigz \\\$wds_niigz &&
-      ls -1 /INPUTS &&
+      echo noise_niigz \\\$noise_niigz &&
+
       run_matlab_entrypoint.sh 
       /opt/matlabruntime/R2023a
       wrapper_WaveletDespike
-      /INPUTS/\\\$fbase
+      \\\$preproc_niigz
       /OUTPUTS/fmri
       LimitRAM 12 &&
+
       mkdir /OUTPUTS/DESPIKED &&
-      cp /OUTPUTS/fmri_wds.nii.gz /OUTPUTS/DESPIKED/\\\$wds_niigz
+      mv /OUTPUTS/fmri_wds.nii.gz /OUTPUTS/DESPIKED/\\\$wds_niigz &&
+      mkdir /OUTPUTS/NOISE &&
+      mv /OUTPUTS/fmri_wds.nii.gz /OUTPUTS/NOISE/\\\$noise_niigz
     \"
