@@ -46,10 +46,10 @@ command:
   container: bwt
   args: >-
     bash -c \"
-      preproc_niigz=\$(ls /INPUTS/fmriprepBIDS/fmriprepBIDS/sub-*/ses-*/func/*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz) &&
-      fbase=\$(basename \$preproc_niigz) &&
-      wds_niigz=\$(sed 's/desc-preproc_bold/desc-wds_bold/' \$fbase) &&
-      cp \$preproc_niigz /INPUTS &&
+      preproc_niigz=\\\$(ls /INPUTS/fmriprepBIDS/fmriprepBIDS/sub-*/ses-*/func/*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz) &&
+      fbase=\\\$(basename \\\$preproc_niigz) &&
+      wds_niigz=\\\$(sed 's/desc-preproc_bold/desc-wds_bold/' \\\$fbase) &&
+      cp \\\$preproc_niigz /INPUTS &&
       run_matlab_entrypoint.sh 
       /opt/matlabruntime/R2023a
       wrapper_WaveletDespike
@@ -57,5 +57,5 @@ command:
       /OUTPUTS/fmri
       LimitRAM 12 &&
       mkdir /OUTPUTS/DESPIKED &&
-      cp /OUTPUTS/fmri_wds.nii.gz /OUTPUTS/DESPIKED/\$wds_niigz
+      cp /OUTPUTS/fmri_wds.nii.gz /OUTPUTS/DESPIKED/\\\$wds_niigz
     \"
