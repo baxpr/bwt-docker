@@ -1,0 +1,61 @@
+---
+procyamlversion: 3.0.0-dev.0
+
+description: https://github.com/baxpr/bwt-docker/
+
+jobtemplate: job_template_v3.txt
+
+containers:
+  - name: bwt
+    path: bwt-docker_v1.1.0.sif
+    source: docker://baxterprogers/bwt-docker:v1.1.0
+
+requirements:
+  walltime: 0-12
+  memory: 16000
+
+inputs:
+  xnat:
+      
+    filters:
+      - type: match
+        inputs: scan_fmri,assr_fmriprep/scan_fmri
+
+    scans:
+
+      - name: scan_fmri
+        types: Resting state
+        skip_unusable: True
+
+    assessors:
+        
+        - name: assr_fmriprep
+          proctypes: fmriprep_v24
+          resources:
+            - {resource: fmriprepBIDS, ftype: DIR, fdest: fmriprepBIDS}
+
+
+outputs:
+  - {path: DESPIKED, type: DIR, resource: DESPIKED}
+  - {path: fmri_noise.nii.gz, type: FILE, resource: NOISE}
+  - {path: fmri_SP.txt, type: FILE, resource: SP}
+
+
+command:
+  type: singularity_exec
+  container: bwt
+  args: >-
+    bash -c \"
+      preproc_niigz=\$(ls /INPUTS/fmriprepBIDS/fmriprepBIDS/sub-*/ses-*/func/*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz) &&
+      fbase=\$(basename \$preproc_niigz) &&
+      wds_niigz=\$(sed 's/desc-preproc_bold/desc-wds_bold/' \$fbase) &&
+      cp \$preproc_niigz /INPUTS &&
+      run_matlab_entrypoint.sh 
+      /opt/matlabruntime/R2023a
+      wrapper_WaveletDespike
+      /INPUTS/\$preproc_niigz
+      /OUTPUTS/fmri
+      LimitRAM 12 &&
+      mkdir /OUTPUTS/DESPIKED &&
+      cp /OUTPUTS/fmri_wds.nii.gz /OUTPUTS/DESPIKED/\$wds_niigz
+    \"
