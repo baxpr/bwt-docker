@@ -48,7 +48,7 @@ command:
     bash -c \"
       preproc_niigz=\\\$(ls /INPUTS/fmriprepBIDS/fmriprepBIDS/sub-*/ses-*/func/*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz) &&
       fbase=\\\$(basename \\\$preproc_niigz) &&
-      wds_niigz=\\\$(sed 's/desc-preproc_bold/desc-wds_bold/' \\\$fbase) &&
+      wds_niigz=\\\$(echo \\\$fbase | sed 's/desc-preproc_bold/desc-wds_bold/') &&
       cp \\\$preproc_niigz /INPUTS &&
       run_matlab_entrypoint.sh 
       /opt/matlabruntime/R2023a
