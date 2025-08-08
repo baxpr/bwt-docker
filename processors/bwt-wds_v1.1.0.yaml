@@ -50,10 +50,14 @@ command:
       fbase=\\\$(basename \\\$preproc_niigz) &&
       wds_niigz=\\\$(echo \\\$fbase | sed 's/desc-preproc_bold/desc-wds_bold/') &&
       cp \\\$preproc_niigz /INPUTS &&
+      echo preproc_niigz \\\$preproc_niigz &&
+      echo fbase \\\$fbase &&
+      echo wds_niigz \\\$wds_niigz &&
+      ls -1 /INPUTS &&
       run_matlab_entrypoint.sh 
       /opt/matlabruntime/R2023a
       wrapper_WaveletDespike
-      /INPUTS/\$preproc_niigz
+      /INPUTS/\\\$fbase
       /OUTPUTS/fmri
       LimitRAM 12 &&
       mkdir /OUTPUTS/DESPIKED &&
