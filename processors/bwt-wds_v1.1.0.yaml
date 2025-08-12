@@ -9,7 +9,10 @@ containers:
   - name: bwt
     path: bwt-docker_v1.1.0.sif
     source: docker://baxterprogers/bwt-docker:v1.1.0
-
+  - name: fsl
+    path: fsl-base_v6.0.7.18.sif
+    source: docker://baxterprogers/fsl-base:v6.0.7.18
+    
 requirements:
   walltime: 0-12
   memory: 16000
@@ -41,6 +44,19 @@ outputs:
   - {path: fmri_SP.txt, type: FILE, resource: SP}
 
 
+pre:
+  type: singularity_exec
+  container: fsl
+  args: >-
+    bash -c \"
+    boldref_niigz=\\\$(ls /INPUTS/fmriprepBIDS/fmriprepBIDS/sub-*/ses-*/func/*_space-MNI152NLin2009cAsym_boldref.nii.gz) &&
+    preproc_niigz=\\\$(ls /INPUTS/fmriprepBIDS/fmriprepBIDS/sub-*/ses-*/func/*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz) &&
+    mask_niigz=\\\$(ls /INPUTS/fmriprepBIDS/fmriprepBIDS/sub-*/ses-*/func/*_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz) &&
+    brainmedian=\\\$(fslstats \\\$boldref_niigz -k \\\$mask_niigz -P 50) &&
+    fslmaths \\\$preproc_niigz -div \\\$brainmedian -mul 1000 /OUTPUTS/scaled-fmri.nii.gz
+    \"
+
+
 command:
   type: singularity_exec
   container: bwt
@@ -60,7 +76,7 @@ command:
       run_matlab_entrypoint.sh 
       /opt/matlabruntime/R2023a
       wrapper_WaveletDespike
-      \\\$preproc_niigz
+      /OUTPUTS/scaled-fmri.nii.gz
       /OUTPUTS/fmri
       LimitRAM 12 &&
 
