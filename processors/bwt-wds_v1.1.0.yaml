@@ -84,5 +84,5 @@ command:
       mkdir /OUTPUTS/DESPIKED &&
       mv /OUTPUTS/fmri_wds.nii.gz /OUTPUTS/DESPIKED/\\\$wds_niigz &&
       mkdir /OUTPUTS/NOISE &&
-      mv /OUTPUTS/fmri_wds.nii.gz /OUTPUTS/NOISE/\\\$noise_niigz
+      mv /OUTPUTS/fmri_noise.nii.gz /OUTPUTS/NOISE/\\\$noise_niigz
     \"
