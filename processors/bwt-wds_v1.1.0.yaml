@@ -42,6 +42,7 @@ outputs:
   - {path: DESPIKED, type: DIR, resource: DESPIKED}
   - {path: NOISE, type: DIR, resource: NOISE}
   - {path: fmri_SP.txt, type: FILE, resource: SP}
+  - {path: scaled-fmri.nii.gz, type: FILE, resource: SCALED}
 
 
 pre:
